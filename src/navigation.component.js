@@ -1,20 +1,40 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen } from './home.component';
-import { DetailsScreen } from './details.component';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomNavigation, BottomNavigationTab, Layout, Text } from '@ui-kitten/components';
 
-const { Navigator, Screen } = createStackNavigator();
+const { Navigator, Screen } = createBottomTabNavigator();
 
-const HomeNavigator = () => (
-  <Navigator headerMode='none'>
-    <Screen name='Home' component={HomeScreen}/>
-    <Screen name='Details' component={DetailsScreen}/>
+const UsersScreen = () => (
+  <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Text category='h1'>USERS</Text>
+  </Layout>
+);
+
+const OrdersScreen = () => (
+  <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Text category='h1'>ORDERS</Text>
+  </Layout>
+);
+
+const BottomTabBar = ({ navigation, state }) => (
+  <BottomNavigation
+    selectedIndex={state.index}
+    onSelect={index => navigation.navigate(state.routeNames[index])}>
+    <BottomNavigationTab title='USERS'/>
+    <BottomNavigationTab title='ORDERS'/>
+  </BottomNavigation>
+);
+
+const TabNavigator = () => (
+  <Navigator tabBar={props => <BottomTabBar {...props} />}>
+    <Screen name='Users' component={UsersScreen}/>
+    <Screen name='Orders' component={OrdersScreen}/>
   </Navigator>
 );
 
 export const AppNavigator = () => (
   <NavigationContainer>
-    <HomeNavigator/>
+    <TabNavigator/>
   </NavigationContainer>
 );

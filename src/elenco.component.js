@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { List, Icon, Layout, Text, TopNavigation,ListItem, TopNavigationAction } from '@ui-kitten/components';
+import { List, Icon, Layout, Text, Divider,ListItem,SafeAreaLayout, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import {elencoTicket} from './api'
 
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
 );
 const renderItem = ({ item, index }) => (
-  <ListItem title={`${item} ${index + 1}`}/>
+  <ListItem
+    title={`${item[2]} ${index + 1}`}
+    description={`${item[5]} ${index + 1}`}
+  />
 );
+
+
+const data = new Array(8).fill({
+  title: 'Item',
+  description: 'Description for Item',
+});
 
 export default class ElencoScreen extends React.Component {
 
@@ -23,22 +32,21 @@ export default class ElencoScreen extends React.Component {
   
   render() {
     return (
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category='h1'>Elenco</Text>
-        <List
-          style={styles.container}
-          data={this.state.tickets}
-          renderItem={renderItem}
-        />
-      </Layout>
+    <SafeAreaView style={styles.safeArea}>
+      <List
+        data={this.state.tickets}
+        ItemSeparatorComponent={Divider}
+        renderItem={renderItem}
+      />
+    </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    maxHeight: 192,
-  },
+  safeArea: {
+    flex: 1,
+  }
 });
 
 

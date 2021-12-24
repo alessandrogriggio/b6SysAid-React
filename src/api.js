@@ -54,10 +54,10 @@ export async function elencoTicket() {
         };
 
         return fetch("http://188.152.203.170:90/b6sysaid/api/sr", requestOptions)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result =>  {
-            //console.log(result);
-            return result;
+            //console.log(result.data);
+            return result.data;
         })
         .catch(error => console.log('error', error));
     } catch (error) {

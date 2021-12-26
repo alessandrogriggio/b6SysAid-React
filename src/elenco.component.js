@@ -14,10 +14,11 @@ const renderItemHeader = (
   </Layout>
 );
 
-const Header = ({ title }) => (
-  <Layout>
-    <Text category='s1'>{title}</Text>
-  </Layout>
+const Header = ({ title, asset }) => (
+  <View  >
+    <Text category='h6' style={styles.header}>{title}</Text>
+    <Text category='s1' style={styles.header}>{asset}</Text>
+  </View>
 );
 
 const Footer = (props) => (
@@ -36,22 +37,7 @@ const Footer = (props) => (
   </View>
 );
 
-const renderItem = ({ item, index }) => (
-  
-  // <ListItem
-  //   title={}
-  //   description={`${item[5]} ${index + 1}`}
-  // />
 
-  <Card
-    style={styles.itemContainer}
-    footer={Footer}
-    header={(props) => <Header {...props} title={`${item[3]}`} />}
-    onPress={() => alert('ciao')}>
-      <Text>{`${item[2]}`}</Text>
-  </Card>
-
-);
 
 export default class ElencoScreen extends React.Component {
 
@@ -63,6 +49,20 @@ export default class ElencoScreen extends React.Component {
     elencoTicket().then(response => this.setState({tickets: response,isLoading: false}));
   }
 
+  renderItem = ({ item, index }) => (
+    <Card
+      style={styles.itemContainer}
+      footer={Footer}
+      header={(props) => <Header {...props} title={`${item[3]}`} asset={`${item[4]}`}/>}
+      onPress={() => this.openTicket()}>
+        <Text>{`${item[2]}`}</Text>
+    </Card>
+  );
+
+  openTicket = () => {
+    const { navigation } = this.props;
+    navigation.goBack();
+  };
   
   render() {
       if(this.state.isLoading){
@@ -80,7 +80,7 @@ export default class ElencoScreen extends React.Component {
       <List
         data={this.state.tickets}
         ItemSeparatorComponent={Divider}
-        renderItem={renderItem}
+        renderItem={this.renderItem}
       />
     </SafeAreaView>
     );
@@ -90,6 +90,11 @@ export default class ElencoScreen extends React.Component {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+  },
+  header: {
+    marginHorizontal: 20,
+    marginVertical: 2,
+    //margin: 8,
   },
   itemContainer: {
     flex: 1,

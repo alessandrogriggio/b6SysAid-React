@@ -64,3 +64,38 @@ export async function elencoTicket() {
         console.error(error);
     }
 }
+
+export async function dettaglioTicket() {
+    console.log("fetch dettaglio ticket");
+
+    const JSESSIONID = await AsyncStorage.getItem('JSESSIONID')    
+    const LBLSESSIONID = await AsyncStorage.getItem('LBLSESSIONID')  
+
+    var myHeaders = new Headers();
+    var formdata = new FormData();
+    formdata.append("LBLSESSIONID", LBLSESSIONID);
+    formdata.append("JSESSIONID", JSESSIONID);
+    formdata.append("REGIONEcookieID", '');
+    formdata.append("id", 344467);
+    try {
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata
+        };
+
+        return fetch("http://188.152.203.170:90/b6sysaid/api/dettaglio", requestOptions)
+        .then(response => response.json())
+        .then(result =>  {
+            //console.log(result);
+            res = result.response;
+            corpo = res.substr(res.search("textarea name=\"desc\""));
+            corpo = corpo.substring(corpo.search('>')+1);
+            corpo = corpo.substring(0, corpo.search('</textarea>'));
+            return corpo;
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+        console.error(error);
+    }
+}

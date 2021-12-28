@@ -31,13 +31,12 @@ const Footer = (props) => (
     </Button>
     <Button
       style={styles.footerControl}
+      //onPress={() => openTicket()}
       size='small'>
       ACCEPT
     </Button>
   </View>
 );
-
-
 
 export default class ElencoScreen extends React.Component {
 
@@ -54,15 +53,11 @@ export default class ElencoScreen extends React.Component {
       style={styles.itemContainer}
       footer={Footer}
       header={(props) => <Header {...props} title={`${item[3]}`} asset={`${item[4]}`}/>}
-      onPress={() => this.openTicket()}>
+      onPress={() => this.props.navigation.navigate('Dettaglio')}
+     >
         <Text>{`${item[2]}`}</Text>
     </Card>
   );
-
-  openTicket = () => {
-    const { navigation } = this.props;
-    navigation.goBack();
-  };
   
   render() {
       if(this.state.isLoading){

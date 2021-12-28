@@ -4,7 +4,7 @@ import { Button, Layout,Text, Icon } from '@ui-kitten/components';
 import {login} from './api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//const [loading, setLoading] = useState(true);
+
 const ArrowIcon = (props) => (
   <Icon {...props} name='arrow-right-outline'/>
 );

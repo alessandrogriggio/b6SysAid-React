@@ -6,8 +6,9 @@ import {dettaglioTicket} from './api'
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
 );
-//const BackIcon = style => <Icon {...style} name="arrow-back-outline" height={40} width={24} />;
-
+const StarIcon = (props) => (
+    <Icon {...props} name='star'/>
+  );
 
 export default class DettaglioScreen extends React.Component {
 
@@ -24,6 +25,11 @@ export default class DettaglioScreen extends React.Component {
         this.props.navigation.goBack();
     };
 
+    chiudiTicket = () => {
+        //pagina soluzioni
+        this.props.navigation.navigate('Soluzioni');
+    };
+
     renderBackAction = () => (
         <TopNavigationAction
         icon={BackIcon}
@@ -37,11 +43,30 @@ export default class DettaglioScreen extends React.Component {
         style={styles.container}
         insets='top'>
         <TopNavigation
-          title={'Dettaglio ticket'}
-          accessoryLeft={this.renderBackAction}
+            title={'Dettaglio ticket'}
+            accessoryLeft={this.renderBackAction}
         />
         <Divider/>
-        <Text>{this.state.ticketDettaglio}</Text>
+        <Layout
+          style={styles.contentContainer}
+          level='1'>
+          <Text>{this.state.ticketDettaglio}</Text>
+        </Layout>
+        <Divider/>
+        <View style={styles.profileButtonsContainer}>
+          <Button
+            style={styles.profileButton}
+            accessoryLeft={this.renderBackAction}>
+            PEND NO SLA
+          </Button>
+          <Button
+            appearance='outline'
+            style={styles.profileButton}
+            accessoryLeft={this.renderBackAction}
+            onPress={this.chiudiTicket}>
+            CHIUDI
+          </Button>
+        </View>
     </SafeAreaView>
     );
   }
@@ -49,7 +74,19 @@ export default class DettaglioScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
+    },
+    contentContainer: {
+      flex: 1,
+      padding: 24,
+    },
+    profileButtonsContainer: {
+      flexDirection: 'row',
+      marginVertical: 24,
+    },
+    profileButton: {
+      flex: 1,
+      marginHorizontal: 4,
     },
     loadMoreSpinnerView: {
         alignItems: 'center',

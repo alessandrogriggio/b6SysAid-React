@@ -99,3 +99,23 @@ export async function dettaglioTicket() {
         console.error(error);
     }
 }
+
+export async function soluzioni() {
+    console.log("fetch soluzioni");
+
+    try {
+        var requestOptions = {
+            method: 'GET'
+        };
+
+        return fetch("http://188.152.203.170:90/b6sysaid/api/risposte", requestOptions)
+        .then(response => response.json())
+        .then(result =>  {
+            console.log(result);
+            return result;
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+        console.error(error);
+    }
+}

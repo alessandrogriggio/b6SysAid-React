@@ -6,19 +6,27 @@ import {dettaglioTicket} from './api'
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
 );
-const StarIcon = (props) => (
-    <Icon {...props} name='star'/>
-  );
+const CloseIcon = (props) => (
+  <Icon {...props} name='close-circle-outline'/>
+);
+const PauseIcon = (props) => (
+  <Icon {...props} name='pause-circle-outline'/>
+);
 
 export default class DettaglioScreen extends React.Component {
 
-  state = { ticketDettaglio: null,isLoading: true };
+  state = { ticketDettaglio: null,id: null,isLoading: true };
   
+  constructor(props) {
+    super(props);
+    this.state.id = props.route.params.id;
+    console.log( this.state.id);
+  }
 
   async componentDidMount() {
     const {navigation} = this.props;
     console.log("componentDidMount called in Dettaglio");
-    dettaglioTicket().then(response => this.setState({ticketDettaglio: response,isLoading: false}));
+    dettaglioTicket(this.state.id).then(response => this.setState({ticketDettaglio: response,isLoading: false}));
   }
 
     onBackPress = () => {
@@ -27,13 +35,24 @@ export default class DettaglioScreen extends React.Component {
 
     chiudiTicket = () => {
         //pagina soluzioni
-        this.props.navigation.navigate('Soluzioni');
+        this.props.navigation.navigate('Soluzioni',{id: this.state.id});
     };
 
     renderBackAction = () => (
         <TopNavigationAction
         icon={BackIcon}
         onPress={this.onBackPress}
+        />
+    );
+    renderCloseAction = () => (
+      <TopNavigationAction
+      icon={CloseIcon}
+      onPress={this.onBackPress}
+      />
+    );
+    renderPauseAction = () => (
+      <TopNavigationAction
+      icon={PauseIcon}
         />
     );
 
@@ -56,13 +75,13 @@ export default class DettaglioScreen extends React.Component {
         <View style={styles.profileButtonsContainer}>
           <Button
             style={styles.profileButton}
-            accessoryLeft={this.renderBackAction}>
+            accessoryLeft={this.renderPauseAction}>
             PEND NO SLA
           </Button>
           <Button
             appearance='outline'
             style={styles.profileButton}
-            accessoryLeft={this.renderBackAction}
+            accessoryLeft={this.renderCloseAction}
             onPress={this.chiudiTicket}>
             CHIUDI
           </Button>

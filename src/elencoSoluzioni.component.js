@@ -18,11 +18,16 @@ const StarIcon = (props) => (
 
 export default class SoluzioniScreen extends React.Component {
 
-  state = { elencoSoluzioni: null,isLoading: true };
+  state = { elencoSoluzioni: null,isLoading: true,id: null };
   
+  constructor(props) {
+    super(props);
+    this.state.id = props.route.params.id;
+  }
 
   async componentDidMount() {
     console.log("componentDidMount called in Soluzioni");
+    console.log("id: ", this.state.id);
     soluzioni().then(response => this.setState({elencoSoluzioni: response,isLoading: false}));
   }
 
@@ -41,7 +46,7 @@ export default class SoluzioniScreen extends React.Component {
       <Card
       style={styles.itemContainer}
       header={(props) => <Header {...props} title={`${item['risptitle']}`}/>}
-      onPress={() => this.props.navigation.navigate('EditSoluzione',{soluzione: item['rispdesc']})}
+      onPress={() => this.props.navigation.navigate('EditSoluzione',{soluzione: item['rispdesc'],id: this.state.id})}
      >
         <Text>{`${item['rispdesc']}`}</Text>
     </Card>

@@ -7,34 +7,35 @@ const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
 );
 
-const renderItemHeader = (
-  <Layout>
-    <Text category='h6'>aaa</Text>
-    <Text category='s1'>fff</Text>
-  </Layout>
-);
-
-const Header = ({ title, asset }) => (
-  <View  >
-    <Text category='h6' style={styles.header}>{title}</Text>
-    <Text category='s1' style={styles.header}>{asset}</Text>
+const Header = (props) => (
+  <View style={{ flexDirection: 'row' }}>
+    <Icon name='person-outline' fill='black' width={20} height={20} marginLeft={10} marginTop={10} />
+    <Text category='s1' style={styles.header}>{props.title}</Text>
   </View>
 );
 
 const Footer = (props) => (
-  <View {...props} style={[props.style, styles.footerContainer]}>
-    <Button
-      style={styles.footerControl}
-      size='small'
-      status='basic'>
-      CANCEL
-    </Button>
-    <Button
-      style={styles.footerControl}
-      //onPress={() => openTicket()}
-      size='small'>
-      ACCEPT
-    </Button>
+  <View style={styles.footerContainer}>
+    <Text category='s1' style={styles.textFooter}>{props.asset}</Text>
+    {(() => {
+        if (props.stato == 'Resolved'){
+            return (
+              <Text category='s1' style={styles.textFooterGreen}>{props.stato}</Text>
+            )
+        }else if (props.stato == 'Pend no SLA'){
+            return (
+              <Text category='s1' style={styles.textFooterYellow}>{props.stato}</Text>
+            )
+        }else if (props.stato == 'Queued'){
+            return (
+              <Text category='s1' style={styles.textFooterRed}>{props.stato}</Text>
+            )
+        }else{
+            return (
+              <Text category='s1' style={styles.textFooterRight}>{props.stato}</Text>
+            )
+        }
+    })()}
   </View>
 );
 
@@ -51,9 +52,9 @@ export default class ElencoScreen extends React.Component {
   renderItem = ({ item, index }) => (
     <Card
       style={styles.itemContainer}
-      footer={Footer}
-      header={(props) => <Header {...props} title={`${item[3]}`} asset={`${item[4]}`}/>}
-      onPress={() => this.props.navigation.navigate('Dettaglio')}
+      header={(props) => <Header {...props} title={`${item[3]}`} />}
+      footer={(props) => <Footer {...props} asset={`${item[4]}`}  stato={`${item[6]}`}/>}
+      onPress={() => this.props.navigation.navigate('Dettaglio',{id: item['DT_RowId']})}
      >
         <Text>{`${item[2]}`}</Text>
     </Card>
@@ -87,9 +88,38 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    marginHorizontal: 20,
-    marginVertical: 2,
-    //margin: 8,
+    marginHorizontal: 10,
+    marginVertical: 10
+  },
+  textFooter: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+    flex:1
+  },
+  textFooterGreen: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+    flex:1,
+    color: 'green',
+    textAlign: 'right'
+  },
+  textFooterRed: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+    flex:1,
+    color: 'red',
+    textAlign: 'right'
+  },
+  textFooterRight: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+  },
+  textFooterYellow: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+    flex:1,
+    color: 'orange',
+    textAlign: 'right'
   },
   itemContainer: {
     flex: 1,
@@ -98,6 +128,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   footerControl: {
     marginHorizontal: 2,

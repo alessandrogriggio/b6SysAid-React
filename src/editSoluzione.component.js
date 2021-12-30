@@ -6,37 +6,38 @@ import {soluzioni} from './api'
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
 );
-  const Header = ({ title }) => (
-    <View  >
-      <Text category='h6' style={styles.header}>{title}</Text>
-    </View>
-  );
+const SendIcon = (props) => (
+  <Icon {...props} name='paper-plane' />
+);
 
 export default class EditSoluzioneScreen extends React.Component {
 
-  state = { soluzione: null,isLoading: true };
+  state = { soluzione: null,isLoading: true, id: null };
 
   constructor(props) {
     super(props);
     console.log(props.route.params.soluzione);
     this.state.soluzione = props.route.params.soluzione;
-    //soluzione = params.soluzione;
-    //console.log(soluzione);
+    this.state.id = props.route.params.id;
   }
+
+  courseInputHandler = (enteredText) => {
+    console.log(enteredText);
+    this.state.soluzione = enteredText;
+  };
+  
 
   async componentDidMount() {
     console.log("componentDidMount called in EditSoluzione");
-    //console.log(this.props.navigation);
-    //soluzioni().then(response => this.setState({elencoSoluzioni: response,isLoading: false}));
   }
 
     onBackPress = () => {
-        this.props.navigation.goBack();
+      this.props.navigation.goBack();
     };
 
     chiudiTicket = () => {
         //pagina soluzioni
-        this.props.navigation.goBack();
+       alert(this.state.soluzione + ' --- ' + this.state.id);
     };
 
     renderBackAction = () => (
@@ -46,20 +47,7 @@ export default class EditSoluzioneScreen extends React.Component {
         />
     );
 
-    renderItem = ({ item, index }) => (
-      <Card
-      style={styles.itemContainer}
-      header={(props) => <Header {...props} title={`${item['risptitle']}`}/>}
-      onPress={() => this.props.navigation.navigate('Dettaglio')}
-     >
-        <Text>{`${item['rispdesc']}`}</Text>
-    </Card>
-        
-
-    );
-
   render() {
-    const { navigation } = this.props;
     return ( 
     <SafeAreaView
         style={styles.container}
@@ -75,14 +63,15 @@ export default class EditSoluzioneScreen extends React.Component {
             multiline={true}
             numberOfLines={10}
             value={this.state.soluzione}
-            onChangeText={nextValue => setValue(nextValue)}
+            onChangeText={(text) => this.setState({ soluzione: text })}
           />
         </View>
         <Divider/>
         <View style={styles.profileButtonsContainer}>
           <Button
             style={styles.profileButton}
-            accessoryLeft={this.renderBackAction}>
+            onPress={this.chiudiTicket}
+            accessoryLeft={SendIcon}>
             INVIA SOLUZIONE
           </Button>
         </View>

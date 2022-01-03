@@ -3,8 +3,7 @@ import { StyleSheet, Image } from 'react-native';
 import { Button, Layout,Text, Icon, View,Divider } from '@ui-kitten/components';
 import {login} from './api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { motion } from "framer-motion"
-
+import Box from './box.component';
 
 const ArrowIcon = (props) => (
   <Icon {...props} name='arrow-right-outline'/>
@@ -42,6 +41,9 @@ export default class HomeScreen extends React.Component {
           <Text>{this.state.user}</Text>
         </Layout>
         <Divider/>
+        <Layout>
+                <Box />
+            </Layout>
         <Button
             style={styles.submitButton}
             accessoryRight={ArrowIcon}

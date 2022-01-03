@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Button, Layout,Text, Icon } from '@ui-kitten/components';
+import { StyleSheet, Image } from 'react-native';
+import { Button, Layout,Text, Icon, View,Divider } from '@ui-kitten/components';
 import {login} from './api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { motion } from "framer-motion"
 
 
 const ArrowIcon = (props) => (
@@ -33,13 +34,17 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category='h1'>HOME</Text>
-        <Text>{this.state.user}</Text>
-
+        <Layout style={styles.imgContainer}>
+          <Image style={styles.image} source={require('./assets/logo-sysaid.png')} />
+        </Layout>
+      
+        <Layout style={styles.imgContainer}>
+          <Text>{this.state.user}</Text>
+        </Layout>
+        <Divider/>
         <Button
-            style={styles.signUpButton}
-            size=''
-            accessoryLeft={ArrowIcon}
+            style={styles.submitButton}
+            accessoryRight={ArrowIcon}
             onPress={() => this.props.navigation.navigate('Elenco')}>
             Elenco ticket
         </Button>
@@ -52,5 +57,20 @@ const styles = StyleSheet.create({
   signUpButton: {
     flexDirection: 'row-reverse',
     paddingHorizontal: 0,
+  },
+  imgContainer: {
+    flexDirection: 'row'
+  },
+  image: {
+      resizeMode: 'contain',
+      flex: 1,
+      aspectRatio: 1 // Your aspect ratio
+  },
+  submitButton: {
+    position: 'absolute',
+    bottom:30,
+    width: '90%',
+    marginHorizontal: 20,
+    tintColor: 'red'
   }
 });

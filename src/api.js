@@ -125,31 +125,31 @@ export async function chiudiTicket(id, soluzione) {
     console.log(id);
     console.log(soluzione);
     
-    // const JSESSIONID = await AsyncStorage.getItem('JSESSIONID')    
-    // const LBLSESSIONID = await AsyncStorage.getItem('LBLSESSIONID')  
+    const JSESSIONID = await AsyncStorage.getItem('JSESSIONID')    
+    const LBLSESSIONID = await AsyncStorage.getItem('LBLSESSIONID')  
 
-    // var myHeaders = new Headers();
-    // var formdata = new FormData();
-    // formdata.append("LBLSESSIONID", LBLSESSIONID);
-    // formdata.append("JSESSIONID", JSESSIONID);
-    // formdata.append("REGIONEcookieID", '');
-    // formdata.append("id", id);
-    // formdata.append("soluzione", soluzione);
-    // try {
-    //     var requestOptions = {
-    //         method: 'POST',
-    //         headers: myHeaders,
-    //         body: formdata
-    //     };
+    var myHeaders = new Headers();
+    var formdata = new FormData();
+    formdata.append("LBLSESSIONID", LBLSESSIONID);
+    formdata.append("JSESSIONID", JSESSIONID);
+    formdata.append("REGIONEcookieID", '');
+    formdata.append("id", id);
+    formdata.append("soluzione", soluzione);
+    try {
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata
+        };
 
-    //     return fetch("http://188.152.203.170:90/b6sysaid/api/chiudi", requestOptions)
-    //     .then(response => response.json())
-    //     .then(result =>  {
-    //         console.log(result);
-    //         return result;
-    //     })
-    //     .catch(error => console.log('error', error));
-    // } catch (error) {
-    //     console.error(error);
-    // }
+        return fetch("http://188.152.203.170:90/b6sysaid/api/chiudi", requestOptions)
+        .then(response => response.json())
+        .then(result =>  {
+            console.log(result);
+            return result;
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+        console.error(error);
+    }
 }

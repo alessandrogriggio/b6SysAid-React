@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
 import {  Icon, Layout, Text, Divider,Card, TopNavigation, TopNavigationAction, Input, Button } from '@ui-kitten/components';
-import {soluzioni} from './api'
+import {chiudiTicket} from './api'
 
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
@@ -37,7 +37,7 @@ export default class EditSoluzioneScreen extends React.Component {
 
     chiudiTicket = () => {
         //pagina soluzioni
-       alert(this.state.soluzione + ' --- ' + this.state.id);
+       chiudiTicket(this.state.id,this.state.soluzione).then(response => this.props.navigation.goBack());
     };
 
     renderBackAction = () => (

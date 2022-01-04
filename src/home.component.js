@@ -4,6 +4,8 @@ import { Button, Layout,Text, Icon, View,Divider } from '@ui-kitten/components';
 import {login} from './api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Box from './box.component';
+import {ScaleAnimation} from './ScaleAnimation';
+import {EntryAnimation} from './EntryAnimation';
 
 const ArrowIcon = (props) => (
   <Icon {...props} name='arrow-right-outline'/>
@@ -41,15 +43,31 @@ export default class HomeScreen extends React.Component {
           <Text>{this.state.user}</Text>
         </Layout>
         <Divider/>
-        <Layout>
-                <Box />
-            </Layout>
-        <Button
+        {/* <Layout>
+            <Box />
+        </Layout> */}
+        <Divider/>
+        <EntryAnimation index={1}>
+          <ScaleAnimation onPress={() => {}} disabled={false} scaleTo={0.97}>
+            {/* <Button backgroundColor="#7ab2c9">Button</Button> */}
+
+            <Button
+              style={styles.submitButton}
+              accessoryRight={ArrowIcon}
+              onPress={() => this.props.navigation.navigate('Elenco')}>
+              Elenco ticket
+            </Button>
+          </ScaleAnimation>
+        </EntryAnimation>
+
+
+
+        {/* <Button
             style={styles.submitButton}
             accessoryRight={ArrowIcon}
             onPress={() => this.props.navigation.navigate('Elenco')}>
             Elenco ticket
-        </Button>
+        </Button> */}
       </Layout>
     );
   }
@@ -69,10 +87,9 @@ const styles = StyleSheet.create({
       aspectRatio: 1 // Your aspect ratio
   },
   submitButton: {
-    position: 'absolute',
-    bottom:30,
-    width: '90%',
-    marginHorizontal: 20,
+
+    width: '100%',
     tintColor: 'red'
-  }
+  },
+
 });
